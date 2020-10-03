@@ -9,21 +9,25 @@ from typing import List
 
 
 class IntervalPeriod():
-    def __init__(self, low: int, high: int) -> None:
-        self._low: int = low
-        self._high: int = high
+    """Represent an intercal period."""
 
-    def getLow(self) -> int:
+    def __init__(self, low_start: int, high_end: int) -> None:
+        self._low: int = low_start
+        self._high: int = high_end
+
+    def get_low(self) -> int:
+        "Return the interval's low period."
         return self._low
 
-    def getHigh(self) -> int:
+    def get_high(self) -> int:
+        """Return the interval's high period."""
         return self._high
 
     def __repr__(self) -> str:
         return f"<Interval Period start:{self._low} end:{self._high}>"
 
     def __lt__(self, other):
-        return self._low < other.getLow()
+        return self._low < other.get_low()
 
 
 with open('milk2.in') as f:
@@ -41,19 +45,19 @@ for i, item in enumerate(lines):
 
 intervals = sorted(intervals)
 
-low: int = intervals[0].getLow()
-high: int = intervals[0].getHigh()
+low: int = intervals[0].get_low()
+high: int = intervals[0].get_high()
 maxInterval: int = high-low
 maxGap: int = 0
 
 for i, interval in enumerate(intervals):
-    if (interval.getLow() <= high):
-        high = max(interval.getHigh(), high)
+    if interval.get_low() <= high:
+        high = max(interval.get_high(), high)
     else:
         maxInterval = max(maxInterval, high-low)
-        maxGap = max(maxGap, interval.getLow()-high)
-        low = interval.getLow()
-        high = interval.getHigh()
+        maxGap = max(maxGap, interval.get_low()-high)
+        low = interval.get_low()
+        high = interval.get_high()
 
 
 with open('milk2.out', 'w') as f:
